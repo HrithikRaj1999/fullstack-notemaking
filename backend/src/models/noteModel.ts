@@ -7,7 +7,7 @@ interface NoteType {
 const noteSchema = new Schema<NoteType>(
   {
     title: { type: String, required: true },
-    description: { type: String, required: false },
+    description: { type: String },
   },
   { timestamps: true }
 );
