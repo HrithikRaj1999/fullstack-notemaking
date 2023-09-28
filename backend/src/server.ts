@@ -1,12 +1,14 @@
-import express from "express";
+import mongoose from "mongoose";
+import cleanEnv from "./utils/validateEnv";
+import { app } from "./app";
+const port = cleanEnv.PORT; //this will follow the schema of clean Env, so that undefined is not expected
 
-const app = express();
-const port: number = 5000;
-
-app.get("/", (req, res) => {
-  res.send(`Hello World`);
-});
-
-app.listen(port!, () => {
-  console.log(`Server running on ${port}`);
-});
+mongoose
+  .connect(cleanEnv.MONGO_CONNECTION_STRING) //this will follow the schema of clean Env so that undefined is not expected
+  .then(() => {
+    console.log(`Mongoose Connected`);
+    app.listen(port, () => {
+      console.log(`Server running on ${port}`);
+    });
+  })
+  .catch(console.error);
