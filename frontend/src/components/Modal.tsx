@@ -23,7 +23,7 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
   });
-  const { notes, setLocalNotes } = useNotes();
+  const { notes, setNotes } = useNotes();
   const initialValue: NoteSubmitType = { title: "", description: "" };
 
   const handleSave = async (values: NoteSubmitType) => {
@@ -32,7 +32,7 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
         title: values.title,
         description: values.description,
       });
-      setLocalNotes(data.notes);
+      setNotes(data.notes);
       setShowModal(false);
     } catch (error) {
       console.log(error);
