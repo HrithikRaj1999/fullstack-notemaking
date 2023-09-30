@@ -32,8 +32,9 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
         title: values.title,
         description: values.description,
       });
-      setNotes(data.notes);
+      setNotes([...notes, data.newNote]);
       setShowModal(false);
+      console.log("set");
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +57,7 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
               className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
               onSubmit={handleSave}
             >
-              {(values) => (
+              {({ values, touched }) => (
                 <Form>
                   <div className="mb-4 flex flex-col gap-6">
                     <Field
@@ -65,11 +66,13 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
                       name="title"
                       placeholder="Enter title"
                     />
+
                     <ErrorMessage
                       name="title"
                       component="div"
                       className="text-red-600"
                     />
+
                     <Field
                       className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       as="textarea"
@@ -77,6 +80,7 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
                       name="description"
                       placeholder="Enter description"
                     />
+
                     <ErrorMessage
                       name="description"
                       component="div"

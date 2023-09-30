@@ -41,8 +41,8 @@ const Note = ({ note }: NoteProps) => {
 
     try {
       await axios.put(`http://localhost:5000/api/notes/${_id}`, updatedValue);
-      const updatedNotes = notes.map((n) =>
-        n._id === _id ? { ...n, ...updatedValue } : n
+      const updatedNotes = notes.map((note) =>
+        note._id === _id ? { ...note, ...updatedValue } : note
       );
       setNotes([...updatedNotes]);
       setIsDesEditable(false);
@@ -91,16 +91,16 @@ const Note = ({ note }: NoteProps) => {
           </div>
         )}
         {isDesEditable ? (
-          <Input
-            crossOrigin={""}
-            type="textArea"
-            label="description"
-            className="bg-yellow-300 p-4 h-[100px] max-h-48"
-            onBlur={(e) => {
-              handleEditOnBlur(e.target.value, "description");
-              setIsDesEditable(false);
-            }}
-          />
+          <div className="bg-yellow-300 h-[100px] max-h-48">
+            <Input
+              crossOrigin={""}
+              label="Description"
+              onBlur={(e) => {
+                handleEditOnBlur(e.target.value, "description");
+                setIsDesEditable(false);
+              }}
+            />
+          </div>
         ) : (
           <Typography
             className="h-[100px] overflow-y-auto max-h-48 text-muted"
