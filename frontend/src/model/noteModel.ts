@@ -7,3 +7,8 @@ export interface NoteModel {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface NoteSubmitType {
+  title: string;
+  description?: string;
+}

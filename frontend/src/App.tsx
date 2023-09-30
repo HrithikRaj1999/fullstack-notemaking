@@ -4,29 +4,16 @@ import axios from "axios";
 import Note from "./components/Note";
 import Header from "./components/Header";
 
-function App() {
-  const [notes, setNotes] = useState<NoteModel[]>([]);
+import { NotesProvider, useNotes } from "./context/NoteContext";
+import Home from "./components/Home";
 
-  const fetchNotes = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:5000/api/notes/");
-      setNotes([...data.notes]);
-      // console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+function App() {
   return (
     <div className="App">
-      <Header />
-      <div className="flex flex-wrap justify-center ">
-        {notes.map((note) => (
-          <Note key={note._id} note={note} />
-        ))}
-      </div>
+      <NotesProvider>
+        <Header />
+        <Home />
+      </NotesProvider>
     </div>
   );
 }
