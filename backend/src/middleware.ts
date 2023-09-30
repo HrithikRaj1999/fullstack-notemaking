@@ -2,11 +2,12 @@ import express, { NextFunction, Request, Response } from "express";
 import notesRouter from "./routes/notesRoutes";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
-
+import cors from "cors";
 export const app = express();
 
 app.use(morgan("dev")); //it is used to show which end point hit
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/notes", notesRouter);
 
