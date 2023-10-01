@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import cleanEnv from "./utils/validateEnv";
-import { app } from "./middleware";
+import { app } from "./app";
 const port = cleanEnv.PORT; //this will follow the schema of clean Env, so that undefined is not expected
 
 mongoose

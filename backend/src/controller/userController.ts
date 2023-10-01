@@ -4,10 +4,9 @@ import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
 
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
+  console.log("getaaut", req.session.userId);
   try {
-    const authenticatedUserId = req.session.userId;
-    if (!authenticatedUserId) throw createHttpError(401, "Not authorized");
-    const user = await userModel.findById(authenticatedUserId).select("+email");
+    const user = await userModel.findById(req.session.userId).select("+email");
     res.status(200).send(user);
   } catch (error) {
     next(error);
@@ -37,7 +36,7 @@ export const signUp: RequestHandler<
       email,
       password: hashedPassword,
     });
-    req.session.userId = newUser._id;
+    req.session.userId = newUser.id;
 
     return res.status(201).send({
       success: true,
@@ -66,7 +65,8 @@ export const login: RequestHandler<
     if (!user) throw createHttpError(401, "Invalid Credentials");
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) throw createHttpError(401, "Invalid Credentials");
-    req.session.userId = user._id;
+    req.session.userId = user.id;
+    console.log("login", req.session);
     res.status(201).send({
       success: true,
       message: "logged In successfully",
@@ -76,6 +76,7 @@ export const login: RequestHandler<
 };
 
 export const logout: RequestHandler = (req, res, next) => {
+  console.log("logut", req.session);
   req.session.destroy((error) => {
     if (error) next(error);
     else res.sendStatus(200);
