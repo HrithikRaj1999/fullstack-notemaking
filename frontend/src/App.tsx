@@ -6,14 +6,17 @@ import Header from "./components/Header";
 
 import { NotesProvider, useNotes } from "./context/NoteContext";
 import Home from "./components/Home";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
     <div className="App">
-      <NotesProvider>
-        <Header />
-        <Home />
-      </NotesProvider>
+      <UserProvider>
+        <NotesProvider>
+          <Header />
+          <Home />
+        </NotesProvider>
+      </UserProvider>
     </div>
   );
 }

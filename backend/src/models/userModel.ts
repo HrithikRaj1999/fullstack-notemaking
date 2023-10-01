@@ -11,4 +11,4 @@ const userSchema = new Schema<UserType>({
   password: { type: String, required: true, select: false },
 });
 
-export default model<UserType>("user", userSchema);
+export default model<UserType>("User", userSchema);

@@ -37,7 +37,6 @@ export const signUp: RequestHandler<
       email,
       password: hashedPassword,
     });
-
     req.session.userId = newUser._id;
 
     return res.status(201).send({

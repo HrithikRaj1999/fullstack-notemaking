@@ -9,16 +9,26 @@ import env from "./utils/validateEnv";
 import MongoStore from "connect-mongo";
 export const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 app.use(morgan("dev")); //it is used to show which end point hit
 app.use(express.json());
-app.use(cors());
 app.use(
   session({
+    name: "SESSION",
     secret: env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 60 * 60 * 100,
+      sameSite: false,
+      httpOnly: true,
+      secure: false,
+      maxAge: 60 * 60 * 1000,
     },
     rolling: true,
     store: MongoStore.create({
