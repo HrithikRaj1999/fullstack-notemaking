@@ -28,7 +28,9 @@ const Note = ({ note }: NoteProps) => {
   }, [updatedAt, createdAt]);
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/notes/${_id}`);
+      await axios.delete(`http://localhost:5000/api/notes/${_id}`, {
+        withCredentials: true,
+      });
 
       setNotes([...notes.filter((item) => item._id !== _id)]);
     } catch (error) {}
@@ -40,7 +42,9 @@ const Note = ({ note }: NoteProps) => {
     };
 
     try {
-      await axios.put(`http://localhost:5000/api/notes/${_id}`, updatedValue);
+      await axios.put(`http://localhost:5000/api/notes/${_id}`, updatedValue, {
+        withCredentials: true,
+      });
       const updatedNotes = notes.map((note) =>
         note._id === _id ? { ...note, ...updatedValue } : note
       );
