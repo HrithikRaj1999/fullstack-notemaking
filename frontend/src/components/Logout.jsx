@@ -6,10 +6,16 @@ const Logout = () => {
   const { setUser } = useUser();
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/user/logout");
+      await axios.post(
+        "http://localhost:5000/api/user/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       setUser(null);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
   return (

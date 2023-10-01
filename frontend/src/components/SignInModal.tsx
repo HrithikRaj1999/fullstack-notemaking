@@ -51,13 +51,13 @@ export function SignInModal({
           withCredentials: true,
         }
       );
-      console.log({ data });
+      //console.log({ data });
       setUser({ ...data.newUser });
 
       setShowSignUpModal(false);
-      console.log("set");
+      //console.log("set");
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

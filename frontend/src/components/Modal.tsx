@@ -28,15 +28,19 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
 
   const handleSave = async (values: NoteSubmitType) => {
     try {
-      const { data } = await axios.post(`http://localhost:5000/api/notes/`, {
-        title: values.title,
-        description: values.description,
-      });
+      const { data } = await axios.post(
+        `http://localhost:5000/api/notes/`,
+        {
+          title: values.title,
+          description: values.description,
+        },
+        { withCredentials: true }
+      );
       setNotes([...notes, data.newNote]);
       setShowModal(false);
-      console.log("set");
+      //console.log("set");
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

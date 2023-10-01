@@ -3,10 +3,11 @@ import createHttpError from "http-errors";
 import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
 
-export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
-  console.log("getaaut", req.session.userId);
+export const authTenticated: RequestHandler = async (req, res, next) => {
   try {
-    const user = await userModel.findById(req.session.userId).select("+email");
+    const user = await userModel
+      .findById(req.session.user?._id)
+      .select("+email");
     res.status(200).send(user);
   } catch (error) {
     next(error);
@@ -36,7 +37,7 @@ export const signUp: RequestHandler<
       email,
       password: hashedPassword,
     });
-    req.session.userId = newUser.id;
+    req.session.user = newUser;
 
     return res.status(201).send({
       success: true,
@@ -65,8 +66,8 @@ export const login: RequestHandler<
     if (!user) throw createHttpError(401, "Invalid Credentials");
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) throw createHttpError(401, "Invalid Credentials");
-    req.session.userId = user.id;
-    console.log("login", req.session);
+    req.session.user = user;
+    //console.log("login", req.session);
     res.status(201).send({
       success: true,
       message: "logged In successfully",
@@ -76,7 +77,6 @@ export const login: RequestHandler<
 };
 
 export const logout: RequestHandler = (req, res, next) => {
-  console.log("logut", req.session);
   req.session.destroy((error) => {
     if (error) next(error);
     else res.sendStatus(200);

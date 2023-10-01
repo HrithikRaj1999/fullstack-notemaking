@@ -11,8 +11,10 @@ interface createNoteBody {
   description?: string;
 }
 export const getNotes: RequestHandler = async (req, res, next) => {
+  const authId = req.session.user?._id;
+  console.log({ getNotes: authId });
   try {
-    const notes = await noteModel.find();
+    const notes = await noteModel.find({ userId: authId });
     res.status(200).send({
       success: true,
       notes,
@@ -49,9 +51,10 @@ export const createNotes: RequestHandler<
   unknown
 > = async (req, res, next) => {
   try {
+    const userId = req.session.user?._id;
     const { title, description } = req.body;
     if (!title) throw createHttpError(400, "Note Title is Needed ");
-    const newNote = await noteModel.create({ title, description }); //this return promise by default
+    const newNote = await noteModel.create({ userId, title, description }); //this return promise by default
     res.status(200).send({
       success: true,
       message: "Created Successfully",

@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { NoteModel } from "../model/noteModel";
+import { useUser } from "./UserContext";
 
 interface NotesProviderProps {
   children: ReactNode;
@@ -26,10 +27,13 @@ export const useNotes = () => useContext(NotesContext);
 // This will be used in app.tsx
 export const NotesProvider = ({ children }: NotesProviderProps) => {
   const [notes, setNotes] = useState<NoteModel[]>([]);
-
+  const { user } = useUser();
   const fetchNotes = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/notes/");
+      const { data } = await axios.get("http://localhost:5000/api/notes/", {
+        withCredentials: true,
+      });
+
       setNotes([...data.notes]);
     } catch (error) {
       console.log(error);
@@ -38,7 +42,7 @@ export const NotesProvider = ({ children }: NotesProviderProps) => {
 
   useEffect(() => {
     fetchNotes();
-  }, []);
+  }, [user]);
 
   return (
     <NotesContext.Provider value={{ notes, setNotes }}>

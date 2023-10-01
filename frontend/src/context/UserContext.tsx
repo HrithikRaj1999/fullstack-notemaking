@@ -30,16 +30,16 @@ export const useUser = () => useContext(UserContext);
 // This will be used in app.tsx
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<UserType | null>(null);
-  console.log({ useContext: user });
+  //console.log({ useContext: user });
   const fetchUser = async () => {
     try {
       const { data } = await axios.get("http://localhost:5000/api/user", {
         withCredentials: true,
       });
-      console.log({ data });
+      //console.log({ data });
       setUser({ ...data });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

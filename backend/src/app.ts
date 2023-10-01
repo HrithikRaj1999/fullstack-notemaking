@@ -7,6 +7,7 @@ import { userRouter } from "./routes/userRoutes";
 import session from "express-session";
 import env from "./utils/validateEnv";
 import MongoStore from "connect-mongo";
+import { requiredAuth } from "./middleware/auth";
 export const app = express();
 
 app.use(
@@ -23,7 +24,7 @@ app.use(
     name: "SESSION",
     secret: env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       sameSite: false,
       httpOnly: true,
@@ -37,7 +38,7 @@ app.use(
   })
 );
 app.use("/api/user", userRouter);
-app.use("/api/notes", notesRouter);
+app.use("/api/notes", requiredAuth, notesRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createHttpError(404, "EndPoint Not found"));
@@ -45,7 +46,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // all the middle ware executes in sequence thus error middle ware must be at the bottom
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
-  console.error(error);
+  //console.error(error);
   let errorMessage = "Something went wrong";
   let statusCode = 500;
   if (isHttpError(error)) {
