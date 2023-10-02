@@ -1,6 +1,6 @@
 import { Button } from "@material-tailwind/react";
-import { useUser } from "../context/UserContext";
 import axios from "axios";
+import { useUser } from "../context/UserContext";
 
 const Logout = () => {
   const { setUser } = useUser();

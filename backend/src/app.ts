@@ -1,13 +1,13 @@
-import express, { NextFunction, Request, Response } from "express";
-import notesRouter from "./routes/notesRoutes";
-import morgan from "morgan";
-import createHttpError, { isHttpError } from "http-errors";
-import cors from "cors";
-import { userRouter } from "./routes/userRoutes";
-import session from "express-session";
-import env from "./utils/validateEnv";
 import MongoStore from "connect-mongo";
+import cors from "cors";
+import express, { NextFunction, Request, Response } from "express";
+import session from "express-session";
+import createHttpError, { isHttpError } from "http-errors";
+import morgan from "morgan";
 import { requiredAuth } from "./middleware/auth";
+import notesRouter from "./routes/notesRoutes";
+import { userRouter } from "./routes/userRoutes";
+import env from "./utils/validateEnv";
 export const app = express();
 
 app.use(

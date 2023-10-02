@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
-import { NoteModel } from "./model/noteModel";
-import axios from "axios";
-import Note from "./components/Note";
 import Header from "./components/Header";
 
-import { NotesProvider, useNotes } from "./context/NoteContext";
 import Home from "./components/Home";
+import { NotesProvider } from "./context/NoteContext";
 import { UserProvider } from "./context/UserContext";
 
 function App() {

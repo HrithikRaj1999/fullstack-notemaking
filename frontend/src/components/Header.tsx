@@ -1,10 +1,10 @@
 import { Button } from "@material-tailwind/react";
 import { useState } from "react";
-import { Modal } from "./Modal";
 import { useUser } from "../context/UserContext";
-import { SignInModal } from "./SignInModal";
 import { LoginModal } from "./LogInModal";
 import Logout from "./Logout";
+import { Modal } from "./Modal";
+import { SignInModal } from "./SignInModal";
 
 const Header = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -13,7 +13,7 @@ const Header = () => {
   const { user } = useUser();
   return (
     <div className="flex justify-between p-4  w-full bg-black">
-      <span className="text-white text-2xl">Note Me Asap</span>
+      <span className="text-white text-2xl">Notify </span>
       {user ? (
         <div className="flex justify-end">
           <Button

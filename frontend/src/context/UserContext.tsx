@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { NoteModel } from "../model/noteModel";
 
 interface UserProviderProps {
   children: ReactNode;

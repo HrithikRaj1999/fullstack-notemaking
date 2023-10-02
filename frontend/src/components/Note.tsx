@@ -1,16 +1,15 @@
-import { NoteModel } from "../model/noteModel";
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
   Input,
   Typography,
 } from "@material-tailwind/react";
-import { formatDate } from "../utils/formatDate";
-import { useMemo, useState } from "react";
 import axios from "axios";
+import { useMemo, useState } from "react";
 import { useNotes } from "../context/NoteContext";
+import { NoteModel } from "../model/noteModel";
+import { formatDate } from "../utils/formatDate";
 
 interface NoteProps {
   note: NoteModel;

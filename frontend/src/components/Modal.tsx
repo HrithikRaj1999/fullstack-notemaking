@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   Button,
   Dialog,
-  DialogHeader,
   DialogBody,
   DialogFooter,
-  Input,
-  Card,
+  DialogHeader,
 } from "@material-tailwind/react";
 import axios from "axios";
-import { useNotes } from "../context/NoteContext";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { NoteSubmitType } from "../model/noteModel";
 import * as Yup from "yup";
+import { useNotes } from "../context/NoteContext";
+import { NoteSubmitType } from "../model/noteModel";
 interface ModalProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;

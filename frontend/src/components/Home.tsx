@@ -1,8 +1,7 @@
-import React from "react";
 import { useNotes } from "../context/NoteContext";
-import Note from "./Note";
-import Error from "./Error";
 import { useUser } from "../context/UserContext";
+import Error from "./Error";
+import Note from "./Note";
 
 const Home = () => {
   const { notes } = useNotes();
