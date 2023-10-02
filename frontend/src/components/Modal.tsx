@@ -50,64 +50,71 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
 
   return (
     <>
-      <Dialog open={showModal} handler={handleSave}>
+      <Dialog
+        open={showModal}
+        handler={handleClose}
+        dismiss={{
+          enabled: false,
+          outsidePress: false,
+          bubbles: false,
+          outsidePressEvent: undefined,
+        }}
+      >
         <DialogHeader>Create New Note</DialogHeader>
         <DialogBody divider>
-          <Card color="transparent" shadow={false}>
-            <Formik
-              initialValues={initialValue}
-              validationSchema={validationSchema}
-              enableReinitialize={true}
-              className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-              onSubmit={handleSave}
-            >
-              {({ values, touched }) => (
-                <Form>
-                  <div className="mb-4 flex flex-col gap-6">
-                    <Field
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
-                      id="title"
-                      name="title"
-                      placeholder="Enter title"
-                    />
+          <Formik
+            initialValues={initialValue}
+            validationSchema={validationSchema}
+            enableReinitialize={true}
+            className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
+            onSubmit={handleSave}
+          >
+            {({ values, touched }) => (
+              <Form>
+                <div className="mb-4 flex flex-col gap-6">
+                  <Field
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+                    id="title"
+                    name="title"
+                    placeholder="Enter title"
+                  />
 
-                    <ErrorMessage
-                      name="title"
-                      component="div"
-                      className="text-red-600"
-                    />
+                  <ErrorMessage
+                    name="title"
+                    component="div"
+                    className="text-red-600"
+                  />
 
-                    <Field
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      as="textarea"
-                      id="description"
-                      name="description"
-                      placeholder="Enter description"
-                    />
+                  <Field
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    as="textarea"
+                    id="description"
+                    name="description"
+                    placeholder="Enter description"
+                  />
 
-                    <ErrorMessage
-                      name="description"
-                      component="div"
-                      className="text-red-600"
-                    />
-                  </div>
-                  <DialogFooter>
-                    <Button
-                      variant="text"
-                      color="red"
-                      onClick={handleClose}
-                      className="mr-1"
-                    >
-                      <span>Cancel</span>
-                    </Button>
-                    <Button variant="gradient" color="green" type="submit">
-                      <span>Save</span>
-                    </Button>
-                  </DialogFooter>
-                </Form>
-              )}
-            </Formik>
-          </Card>
+                  <ErrorMessage
+                    name="description"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                <DialogFooter>
+                  <Button
+                    variant="text"
+                    color="red"
+                    onClick={handleClose}
+                    className="mr-1"
+                  >
+                    <span>Cancel</span>
+                  </Button>
+                  <Button variant="gradient" color="green" type="submit">
+                    <span>Save</span>
+                  </Button>
+                </DialogFooter>
+              </Form>
+            )}
+          </Formik>
         </DialogBody>
       </Dialog>
     </>

@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
       {user ? (
-        <div className="flex flex-wrap justify-center  ">
+        <div className="flex flex-wrap   ">
           {notes.length === 0 ? (
             <Error />
           ) : (
