@@ -14,6 +14,7 @@ const Logout = () => {
         }
       );
       setUser(null);
+      sessionStorage.removeItem('tabId')
     } catch (error) {
       //console.log(error);
     }

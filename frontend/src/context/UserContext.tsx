@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { NewModal } from "../components/NewModal";
 
 interface UserProviderProps {
   children: ReactNode;
@@ -41,10 +42,27 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       //console.log(error);
     }
   };
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    localStorage.openpages = Date.now();
+
+    window.addEventListener("storage", function (e) {
+      if (e.key === "openpages") {
+        localStorage.page_available = Date.now();
+        localStorage.userId = user?.email;
+      }
+      if (e.key === "page_available") {
+        setShowModal(true);
+        setUser(null)
+      }
+    });
+  }, [user]);
 
   useEffect(() => {
     fetchUser();
   }, []);
+  if (showModal)
+    return <NewModal showModal={showModal} setShowModal={setShowModal} />;
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

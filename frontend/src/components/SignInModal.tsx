@@ -29,7 +29,7 @@ export function SignInModal({
     email: Yup.string().email().required("Title is required"),
     password: Yup.string().required("Title is required"),
   });
-  const { user, setUser } = useUser();
+  const {setUser } = useUser();
   const initialValue: SignUpType = {
     username: "",
     email: "",

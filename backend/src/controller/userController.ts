@@ -2,13 +2,14 @@ import { RequestHandler } from "express";
 import createHttpError from "http-errors";
 import userModel from "../models/userModel";
 import bcrypt from "bcrypt";
+import { User } from "../../@types/session";
 
 export const authTenticated: RequestHandler = async (req, res, next) => {
   try {
     const user = await userModel
       .findById(req.session.user?._id)
       .select("+email");
-    res.status(200).send(user);
+    return res.status(200).send(user);
   } catch (error) {
     next(error);
   }
@@ -53,6 +54,10 @@ interface LoginBody {
   email?: string;
   password?: string;
 }
+async function generateSessionId() {
+  const crypto = await import("crypto");
+  return crypto.randomBytes(64).toString("hex");
+}
 export const login: RequestHandler<
   unknown,
   unknown,
@@ -66,14 +71,19 @@ export const login: RequestHandler<
     if (!user) throw createHttpError(401, "Invalid Credentials");
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) throw createHttpError(401, "Invalid Credentials");
+    const sessionId = await generateSessionId();
+    await userModel.updateOne({ email }, { sessionId });
     req.session.user = user;
-    //console.log("login", req.session);
+    req.session.sessionId = sessionId;
     res.status(201).send({
       success: true,
       message: "logged In successfully",
       user,
+      sessionId,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const logout: RequestHandler = (req, res, next) => {
@@ -82,3 +92,25 @@ export const logout: RequestHandler = (req, res, next) => {
     else res.sendStatus(200);
   });
 };
+
+export const destroy: RequestHandler = async (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.log(err);
+        // Handle error
+        return res.status(500).send("Could not end session");
+      }
+      res.send("Session ended");
+      console.log("session ended");
+    });
+  } else {
+    console.log("No active seessions");
+    res.send("No active session");
+  }
+};
+
+interface BodyType{
+  user:User
+}
+

@@ -1,0 +1,1 @@
+export const myChannel = new BroadcastChannel('my_channel');

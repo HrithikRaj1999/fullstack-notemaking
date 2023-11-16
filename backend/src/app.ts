@@ -8,6 +8,7 @@ import { requiredAuth } from "./middleware/auth";
 import notesRouter from "./routes/notesRoutes";
 import { userRouter } from "./routes/userRoutes";
 import env from "./utils/validateEnv";
+import { validateSession } from "./utils/validateSession";
 export const app = express();
 
 app.use(
@@ -29,7 +30,7 @@ app.use(
       sameSite: false,
       httpOnly: true,
       secure: false,
-      maxAge: 60 * 60 * 1000,
+      maxAge:undefined, 
     },
     rolling: true,
     store: MongoStore.create({
@@ -37,8 +38,10 @@ app.use(
     }),
   })
 );
-app.use("/api/user", userRouter);
-app.use("/api/notes", requiredAuth, notesRouter);
+// app.use(validateTab)
+app.use("/api/user",userRouter);
+// app.use("/api/notes", requiredAuth,validateSession,validateTab,notesRouter);
+app.use("/api/notes", requiredAuth,validateSession,notesRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(createHttpError(404, "EndPoint Not found"));

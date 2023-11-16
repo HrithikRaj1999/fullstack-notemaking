@@ -37,7 +37,8 @@ export function Modal({ showModal, setShowModal }: ModalProps) {
       setNotes([...notes, data.newNote]);
       setShowModal(false);
       //console.log("set");
-    } catch (error) {
+    } catch (error:any) {
+      alert(error.response.data.message);
       //console.log(error);
     }
   };

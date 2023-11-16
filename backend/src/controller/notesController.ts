@@ -12,7 +12,6 @@ interface createNoteBody {
 }
 export const getNotes: RequestHandler = async (req, res, next) => {
   const authId = req.session.user?._id;
-  console.log({ getNotes: authId });
   try {
     const notes = await noteModel.find({ userId: authId });
     res.status(200).send({

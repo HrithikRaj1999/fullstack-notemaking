@@ -25,7 +25,7 @@ export function LoginModal({
   showLogInModal,
   setShowLogInModal,
 }: LoginModalProp) {
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const validationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email is required"),
     password: Yup.string().required("Password is required"),
